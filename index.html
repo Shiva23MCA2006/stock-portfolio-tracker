@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Portfolio Tracker</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 class="my-4">Stock Portfolio Tracker</h1>
+        
+        <form action="/add" method="POST" class="form-inline mb-4">
+            <input type="text" name="symbol" class="form-control" placeholder="Enter stock symbol" required>
+            <button type="submit" class="btn btn-primary ml-2">Add Stock</button>
+        </form>
+
+        <h3>Your Portfolio</h3>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Stock Symbol</th>
+                    <th>Stock Price (USD)</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for stock in portfolio %}
+                <tr>
+                    <td>{{ stock.symbol }}</td>
+                    <td>${{ stock.price }}</td>
+                    <td>
+                        <form action="/remove" method="POST" class="d-inline">
+                            <input type="hidden" name="symbol" value="{{ stock.symbol }}">
+                            <button type="submit" class="btn btn-danger">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="3" class="text-center">No stocks in portfolio</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
